@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <body style="margin: 0;font-family: Tahoma;font-size: 1.2em;background-color: #ECF0F1;">
+    <header style="padding: 1em;background-color: #34495E;margin-bottom: 1em;text-align: center;" class="text-center">
+      <div style="max-width: 33.33%;" class="logo"><img src="{{logo}}"></div>
+    </header>
+    <div style="padding: 1em;margin-right: auto;margin-left: auto;max-width: 500px;color: #2C3E50;" class="body">
+      <h1 style="font-family: Palatino;font-size: 1.5em;">Hi, {{name}}</h1>
+      <p>Your user information was just changed. Please verify that you made these changes.</p>
+      <ul>
+        {{#each changes as |change|}}
+          <li>{{key}}: {{change}}</li>
+        {{/each}}
+      </ul><a href="{{hashLink}}" style="color: #2980B9;display: block;text-align: center;text-decoration: none;padding: 0.5em;font-size: 1.2em;border: 5px solid #2980B9;border-radius: 3px;margin: 1em;margin-right: auto;margin-left: auto;" class="reset-btn">I accept the changes</a>
+      <p
+        style="color: grey;font-size: 0.9em;text-align: center;margin-bottom: 0;margin-top: 2em;" class="text-small">If you didn't request this change please</p>
+        <p style="text-align: center;" class="text-small"><a href="mailto:{{returnEmail}}?subject=I did not change my email&body=Someone unauthorized changed my email. Can you help me change it back?">let us know</a></p>
+    </div>
+  </body>
+</html>
