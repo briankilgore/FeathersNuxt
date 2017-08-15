@@ -2,16 +2,19 @@
   <v-container>
     <v-layout row>
       <v-flex xs6>
-        <h1>Home</h1>
+        <page-title v-bind:title="title"></page-title>
       </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script>
+  import PageTitle from '~/components/PageTitle.vue'
+
   export default {
     layout: 'auth',
     data: () => ({
+      title: 'Home'
     }),
     computed: {
     },
@@ -20,6 +23,7 @@
     mounted: () => {
     },
     components: {
+      PageTitle
     }
   }
 </script>
