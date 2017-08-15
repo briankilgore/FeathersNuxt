@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   // rootDir: path.resolve(__dirname),
-  srcDir: path.resolve(__dirname) + '/client',
+  srcDir: 'client',
   dev: process.env.NODE_ENV !== 'production',
   /*
   ** Headers of the page
