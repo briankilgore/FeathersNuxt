@@ -2,7 +2,7 @@
   <v-app light>
     <v-navigation-drawer persistent clipped v-model="drawer" enable-resize-watcher>
       <v-list>
-        <v-list-tile v-for="item in navItems" :key="item.title" :to="item.route" append nuxt exact>
+        <v-list-tile v-for="item in navItems" :key="item.title" :to="item.route" nuxt exact>
           <v-list-tile-action>
             <v-icon light v-html="item.icon"></v-icon>
           </v-list-tile-action>

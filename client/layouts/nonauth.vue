@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app light>
     <main>
       <v-container fluid>
         <v-layout row wrap>
