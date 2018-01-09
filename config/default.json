@@ -5,5 +5,34 @@
   "paginate": {
     "default": 10,
     "max": 50
+  },
+  "mongodb": "MONGODB_URI",
+  "mailgun": {
+    "api_key": "MAILGUN_API_KEY",
+    "domain": "MAILGUN_DOMAIN"
+  },
+  "authentication": {
+    "secret": "FEATHERS_AUTH_SECRET",
+    "strategies": [
+      "jwt",
+      "local"
+    ],
+    "path": "/authentication",
+    "service": "users",
+    "jwt": {
+      "header": {
+        "type": "access"
+      },
+      "audience": "https://yourdomain.com",
+      "subject": "anonymous",
+      "issuer": "feathers",
+      "algorithm": "HS256",
+      "expiresIn": "1d"
+    },
+    "local": {
+      "entity": "user",
+      "usernameField": "email",
+      "passwordField": "password"
+    }
   }
 }
