@@ -1,12 +1,16 @@
 const { Nuxt, Builder } = require('nuxt');
-const config = require('../../nuxt.config');
 const logger = require('winston');
+const config = require('../../nuxt.config');
 
 const nuxt = new Nuxt(config);
 
 if (config.dev) {
+  console.log('Building NUXT app...');
   new Builder(nuxt).build()
-    .then(() => process.emit('nuxt:build:done'))
+    .then(() => {
+      console.log('Finished building NUXT app');
+      process.emit('nuxt:build:done');
+    })
     .catch((error) => {
       logger.error(error);
       process.exit(1);
