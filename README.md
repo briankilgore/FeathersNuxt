@@ -46,12 +46,12 @@ For more information on all the things you can do with Feathers visit [docs.feat
 
 ## Changelog
 
-__0.1.0__
+__0.0.1__
 
 - Initial release
 
 ## License
 
-Copyright (c) 2016
+Copyright (c) 2018
 
 Licensed under the [MIT license](LICENSE).
