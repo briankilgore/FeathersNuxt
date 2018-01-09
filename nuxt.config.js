@@ -1,14 +1,16 @@
-const path = require('path');
+const { resolve } = require('path');
 
 module.exports = {
-  // rootDir: path.resolve(__dirname),
-  srcDir: 'client',
+  srcDir: resolve(__dirname, 'client'),
   dev: process.env.NODE_ENV !== 'production',
+  router: {
+    middleware: 'check-auth',
+  },
   /*
   ** Headers of the page
   */
   head: {
-    title: 'starter',
+    title: 'FeathersNuxt',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui' },
@@ -29,6 +31,7 @@ module.exports = {
   ** Global CSS
   */
   css: [
+    'normalize.css',
     'vuetify/dist/vuetify.min.css',
     '~/assets/css/main.css'
   ],
@@ -36,7 +39,6 @@ module.exports = {
   ** Add axios globally
   */
   build: {
-    vendor: ['axios'],
     /*
     ** Run ESLINT on save
     */
@@ -49,10 +51,17 @@ module.exports = {
           exclude: /(node_modules)/
         })
       }
-    }
+    },
+    vendor: [
+      'feathers/client',
+      'feathers-socket-io',
+      'socket.io-client',
+      'feathers-hooks',
+      'feathers-authentication-client',
+    ],
   },
   plugins: [
-    '~plugins/vuetify.js',
-    { src: '~plugins/axios.js', injectAs: '$http' }
+    '~/plugins/vuetify.js',
+    { src: '~/plugins/vue-notification.js', ssr: 'false' }
   ]
 };
