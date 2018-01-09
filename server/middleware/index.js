@@ -1,7 +1,8 @@
+'use strict';
+
 const handler = require('feathers-errors/handler');
 const notFound = require('feathers-errors/not-found');
-const nuxt = require('./nuxt.js');
-// const logger = require('./logger');
+const logger = require('./logger');
 
 module.exports = function () {
   // Add your custom middleware here. Remember, that
@@ -9,18 +10,26 @@ module.exports = function () {
   // handling middleware should go last.
   const app = this;
 
-  // Use Nuxt's render middleware
-  app.use((req, res, next) => {
-    switch (req.accepts('html', 'json')) {
-      case 'json':
-        next();
-        break;
-      default:
-        nuxt.render(req, res, next);
-    }
-  });
+  // Webpack dev middleware
+  // if (process.env.NODE_ENV !== 'production') {
+  //   const webpackDev = require('./webpack-dev');
+  //   webpackDev(app);
+  // }
 
   app.use(notFound());
-  // app.use(logger(app));
+  app.use(logger(app));
   app.use(handler());
+
+  app.use((req, res, next) => {
+    switch (req.accepts('html', 'json')) {
+      case 'json': {
+        next();
+        break;
+      }
+      default: {
+        render(req, res, next);
+      }
+    }
+  });
+  
 };
