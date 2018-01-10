@@ -1,27 +1,42 @@
 <template>
-  <v-container fluid>
-    <v-layout row wrap>
-      <v-flex xs12 md6 offset-md3>
+  <v-container fluid fill-height>
+    <v-layout
+      justify-center
+      align-center
+    >
+      <v-flex
+        xs6
+      >
         <v-card>
-          <v-toolbar class="info" dark>
+          <v-toolbar color="indigo" dark card flat>
             <v-toolbar-title>Login</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-text-field
-              label="Username"
-              value=""
-            ></v-text-field>
-            <v-text-field
-              label="Password"
-              :append-icon="showPassword ? 'visibility' : 'visibility_off'"
-              :append-icon-cb="() => (showPassword = !showPassword)"
-              :type="showPassword ? 'text' : 'password'"
-            ></v-text-field>
-            <v-btn block info dark>Login</v-btn>
-          </v-card-text>
-          <v-divider></v-divider>
-          <v-card-text>
-            <p class="text-xs-center mb-0">Don't have an account? <router-link to="register">Sign up!</router-link></p>
+            <v-form v-model="valid" ref="form" lazy-validation v-on:submit.prevent="signIn">
+              <v-text-field
+                label="Email"
+                v-model="email"
+                :rules="emailRules"
+                required
+              ></v-text-field>
+              <v-text-field
+                label="Password"
+                v-model="password"
+                :rules="passwordRules"
+                :append-icon="showPassword ? 'visibility' : 'visibility_off'"
+                :append-icon-cb="() => (showPassword = !showPassword)"
+                :type="showPassword ? 'text' : 'password'"
+                required
+              ></v-text-field>
+              <v-btn
+                :loading="$store.state.auth.isAuthenticatePending"
+                :disabled="$store.state.auth.isAuthenticatePending"
+                type="submit"
+                block
+              >
+                Login
+              </v-btn>
+            </v-form>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -30,30 +45,86 @@
 </template>
 
 <script>
-  export default {
-    layout: 'nonauth',
-    data: () => ({
-      title: 'Login',
-      num1: 1,
-      color: 'rgba(19, 206, 102, 0.8)',
-      formError: null,
-      formUsername: '',
-      formPassword: '',
-      showPassword: false
+import { mapActions } from 'vuex';
+
+export default {
+  data: function () {
+    return {
+      email: '',
+      password: '',
+      error: '',
+      valid: false,
+      showPassword: false,
+      emailRules: [
+        (v) => !!v || 'E-mail is required',
+        (v) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid',
+      ],
+      passwordRules: [
+        (v) => !!v || 'Password is required',
+      ],
+    };
+  },
+  methods: {
+    ...mapActions({
+      authenticate: 'auth/authenticate',
     }),
-    methods: {
-      login () {
-        // console.log(this.$router)
-        window.location.href = '/auth'
+    signIn: async function () {
+      console.log('Form submitted');
+      if (this.$refs.form.validate()) {
+        console.log('Form valid');
+        const { email, password } = this;
+        this.authenticate({ strategy: 'local', email, password })
+          .then((response) => {
+            // console.log(response);
+            this.$router.replace('/');
+          })
+          .catch((e) => {
+            let msg;
+            switch (e.name) {
+              case 'NotAuthenticated':
+                msg = `${e.message}. Please check your email and password and try again.`;
+                this.$notify({
+                  group: 'notice',
+                  type: 'info',
+                  text: msg,
+                });
+                break;
+              case 'Error':
+                msg = `${e.name}. ${e.message}`;
+                this.$notify({
+                  group: 'notice',
+                  type: 'error',
+                  text: msg,
+                });
+                break;
+              default:
+                msg = 'Unknown error occurred. Please check your email and password and try again.';
+                this.$notify({
+                  group: 'notice',
+                  type: 'error',
+                  text: msg,
+                });
+            }
+          });
+      } else {
+        console.log('Form invalid');
       }
     },
-    components: {
-    }
-  }
+  },
+  mounted: function () {
+  },
+  watch: {
+    error: function () {
+      if (this.error) {
+        setTimeout(() => {
+          this.error = '';
+        }, 3000);
+      }
+    },
+  },
+};
 </script>
 
 <style>
-.error {
-  color: red;
-}
 </style>
+
