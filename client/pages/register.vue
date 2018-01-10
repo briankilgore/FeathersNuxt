@@ -1,46 +1,47 @@
 <template>
-  <v-container fluid>
-    <v-layout row wrap>
-      <v-flex xs12 md6 offset-md3>
+  <v-container fluid fill-height>
+    <v-layout
+      justify-center
+      align-center
+    >
+      <v-flex
+        xs6
+      >
         <v-card>
-          <v-toolbar class="info" dark>
-            <v-toolbar-title>Sign up</v-toolbar-title>
+          <v-toolbar color="indigo" dark card flat>
+            <v-toolbar-title>Register</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-text-field
-              name="firstName"
-              label="First Name"
-              value=""
-              required
-              v-model="firstName"
-            ></v-text-field>
-            <v-text-field
-              label="Last Name"
-              value=""
-              required
-              v-model="lastName"
-            ></v-text-field>
-            <v-text-field
-              label="Email Address"
-              value=""
-              required
-              v-model="emailAddress"
-            ></v-text-field>
-            <v-text-field
-              label="Password"
-              hint="At least 8 characters"
-              min="8"
-              :append-icon="showPassword ? 'visibility' : 'visibility_off'"
-              :append-icon-cb="() => (showPassword = !showPassword)"
-              :type="showPassword ? 'text' : 'password'"
-              required
-              v-model="password"
-            ></v-text-field>
-            <v-btn block info dark v-on:click.native="submit">Sign Up</v-btn>
-          </v-card-text>
-          <v-divider></v-divider>
-          <v-card-text>
-            <p class="text-xs-center mb-0">If you already have an account, please <router-link to="login">login</router-link></p>
+            <v-form v-model="valid" ref="form" lazy-validation>
+              <v-text-field
+                label="First Name"
+                v-model="firstName"
+                :rules="[(v) => !!v || 'First Name is required']"
+                required
+              ></v-text-field>
+              <v-text-field
+                label="Last Name"
+                v-model="lastName"
+                :rules="[(v) => !!v || 'Last Name is required']"
+                required
+              ></v-text-field>
+              <v-text-field
+                label="Email"
+                v-model="emailAddress"
+                :rules="emailRules"
+                required
+              ></v-text-field>
+              <v-text-field
+                label="Password"
+                v-model="password"
+                :rules="passwordRules"
+                :append-icon="showPassword ? 'visibility' : 'visibility_off'"
+                :append-icon-cb="() => (showPassword = !showPassword)"
+                :type="showPassword ? 'text' : 'password'"
+                required
+              ></v-text-field>
+            </v-form>
+            <v-btn @click="submit" block>Submit</v-btn>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -49,51 +50,61 @@
 </template>
 
 <script>
-import axios from 'axios'
-// import querystring from 'querystring'
+import { mapActions } from 'vuex';
 
 export default {
-  layout: 'nonauth',
-  data () {
+  data: function () {
     return {
-      num1: 1,
-      color: 'rgba(19, 206, 102, 0.8)',
-      formError: null,
       firstName: '',
       lastName: '',
       emailAddress: '',
       password: '',
-      showPassword: true,
-      response: ''
-    }
+      valid: false,
+      showPassword: false,
+      emailRules: [
+        (v) => !!v || 'E-mail is required',
+        (v) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid',
+      ],
+      passwordRules: [
+        (v) => !!v || 'Password is required',
+      ],
+    };
   },
   methods: {
-    submit () {
-      var data = {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        email: this.emailAddress,
-        password: this.password
+    ...mapActions({
+      usersCreate: 'users/create',
+      authManagementCreate: 'authManagement/create',
+    }),
+    submit: async function () {
+      console.log('Form submitted');
+      if (!this.$refs.form.validate()) {
+        console.log('Form invalid');
+        return;
       }
 
-      axios.post('http://127.0.0.1:3030/api/users', data)
-      .then((response) => {
-        console.log(response)
-        this.$router.replace('/')
-      })
-      .catch((error) => {
-        console.error(error)
-        this.response = error
-      })
-    }
+      console.log('Form valid');
+      try {
+        // create user
+        let user = await this.usersCreate({
+          firstName: this.firstName,
+          lastName: this.lastName,
+          email: this.emailAddress,
+          password: this.password,
+        });
+
+        // send signup verification notification
+        this.authManagementCreate({
+          action: 'resendVerifySignup',
+          value: { email: user.email },
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
-  components: {
-  }
-}
+};
 </script>
 
 <style>
-.error {
-  color: red;
-}
+
 </style>
