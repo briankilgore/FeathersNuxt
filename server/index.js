@@ -9,6 +9,7 @@ process.on('unhandledRejection', (reason, p) => {
 });
 
 process.on('nuxt:build:done', (err) => {
+  console.log('Nuxt starting');
   if (err) {
     logger.error(err);
   }

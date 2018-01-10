@@ -1,4 +1,5 @@
 'use strict';
+const { render } = require('./nuxt');
 
 const handler = require('feathers-errors/handler');
 const notFound = require('feathers-errors/not-found');
