@@ -113,3 +113,5 @@ data/
 
 # nuxt
 .nuxt/**
+
+.env
