@@ -17,7 +17,7 @@ const store = new Vuex.Store({
     // },
   },
   plugins: [
-    // service('users'),
+    service('users'),
     service('authManagement'),
     auth({ userService: 'users' }),
   ],
