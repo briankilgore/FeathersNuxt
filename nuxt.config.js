@@ -25,7 +25,7 @@ module.exports = {
   ** Customize the progress-bar color
   */
   loading: {
-      color: '#3B8070',
+    color: '#3B8070',
   },
   /*
   ** Global CSS
@@ -62,6 +62,6 @@ module.exports = {
   },
   plugins: [
     '~/plugins/vuetify.js',
-    { src: '~/plugins/vue-notification.js', ssr: 'false' }
+    { src: '~/plugins/vue-notification.js', ssr: false }
   ]
 };
