@@ -10,6 +10,15 @@ module.exports = function(app) {
     })
   };
 
+  /**
+   * notifier supports the following types:
+   * 'resendVerifySignup' - Sent to verify new signup (from authManagement.resendVerifySignup API calls)
+   * 'verifySignup' - Sent after new signup has been verified (from authManagement.verifySignupLong and authManagement.verifySignupShort API calls)
+   * 'sendResetPwd' - Sent when password reset has been requested (from authManagement.resetPwdLong and authManagement.resetPwdShort API calls)
+   * 'resetPwd' - Sent after password has been reset (from authManagement.resetPwdLong and authManagement.resetPwdShort API calls)
+   * 'passwordChange' - Sent when user has changed password (from authManagement.passwordChange API calls)
+   * 'identityChange' - Sent when user changes identity (i.e. email address) info (from authManagement.identityChange API calls)
+   */
   return function(type, user, notifierOptions) {
     console.log(`-- Preparing email for ${type}`)
 
