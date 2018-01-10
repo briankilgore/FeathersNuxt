@@ -1,23 +1,27 @@
 <template>
-  <v-container fluid>
-    <v-layout row wrap>
-      <v-flex xs12 md6 offset-md3>
+  <v-container fluid fill-height>
+    <v-layout
+      justify-center
+      align-center
+    >
+      <v-flex
+        xs6
+      >
         <v-card>
-          <v-toolbar class="info" dark>
+          <v-toolbar color="indigo" dark card flat>
+            <v-toolbar-side-icon v-if="$vuetify.breakpoint.width <= 1264" @click.stop="toggleDrawer"></v-toolbar-side-icon>
             <v-toolbar-title>Reset Password</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <v-text-field
-              label="Email Address"
-              value=""
-              required
-              v-model="emailAddress"
-            ></v-text-field>
-            <v-btn block info dark>Login</v-btn>
-          </v-card-text>
-          <v-divider></v-divider>
-          <v-card-text>
-            <p class="text-xs-center mb-0">Don't have an account? <router-link to="register">Sign up!</router-link></p>
+            <v-form v-model="valid" ref="form" lazy-validation>
+              <v-text-field
+                label="Email"
+                v-model="emailAddress"
+                :rules="emailRules"
+                required
+              ></v-text-field>
+            </v-form>
+            <v-btn @click="submit" block>submit</v-btn>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -26,30 +30,35 @@
 </template>
 
 <script>
-  export default {
-    layout: 'nonauth',
-    data: () => ({
-      emailAddress: null
-    }),
-    asyncData: ({ query }) => ({
-      token: query.token
-    }),
-    computed: {
-    },
-    methods: {
-      isValidToken () {
-        console.log(this)
-        return this.token === 'asdfasdfasdf'
+export default {
+  data: function () {
+    return {
+      emailAddress: '',
+      password: '',
+      valid: false,
+      showPassword: false,
+      emailRules: [
+        (v) => !!v || 'E-mail is required',
+        (v) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid',
+      ],
+      passwordRules: [
+        (v) => !!v || 'Password is required',
+      ],
+    };
+  },
+  methods: {
+    submit: function () {
+      console.log('Form submitted');
+      if (this.$refs.form.validate()) {
+        console.log('Form valid');
+      } else {
+        console.log('Form invalid');
       }
     },
-    mounted: () => {
-      // console.log(this)
-    },
-    components: {
-    }
-  }
+  },
+};
 </script>
 
-<style scoped>
+<style>
 
 </style>
