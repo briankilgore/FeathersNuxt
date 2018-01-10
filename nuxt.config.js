@@ -54,7 +54,7 @@ module.exports = {
     },
     vendor: [
       'feathers/client',
-      'feathers-socket-io',
+      'feathers-socketio/client',
       'socket.io-client',
       'feathers-hooks',
       'feathers-authentication-client',
