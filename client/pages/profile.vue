@@ -46,7 +46,6 @@ export default {
         this.success = false;
 
         try {
-          /* eslint-disable no-underscore-dangle */
           await this.patchUser([this.user._id, payload]);
           this.success = true;
         } catch (e) {
