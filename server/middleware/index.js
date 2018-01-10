@@ -17,9 +17,9 @@ module.exports = function () {
   //   webpackDev(app);
   // }
 
-  app.use(notFound());
-  app.use(logger(app));
-  app.use(handler());
+  // app.use(notFound());
+  // app.use(logger(app));
+  // app.use(handler());
 
   app.use((req, res, next) => {
     switch (req.accepts('html', 'json')) {
