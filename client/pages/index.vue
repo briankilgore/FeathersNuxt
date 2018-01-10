@@ -1,33 +1,20 @@
 <template>
-  <v-container>
-    <v-layout row>
-      <v-flex xs6>
-        <page-title v-bind:title="title"></page-title>
-      </v-flex>
+  <v-container fluid fill-height>
+    <v-layout
+      justify-center
+      align-center
+    >
+      <h1>Home</h1>
     </v-layout>
   </v-container>
 </template>
 
 <script>
-  import PageTitle from '~/components/PageTitle.vue'
-
-  export default {
-    layout: 'auth',
-    data: () => ({
-      title: 'Home'
-    }),
-    computed: {
-    },
-    methods: {
-    },
-    mounted: () => {
-    },
-    components: {
-      PageTitle
-    }
-  }
+export default {
+  layout: 'authenticated',
+};
 </script>
 
-<style scoped>
+<style>
 
 </style>
