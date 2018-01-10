@@ -1,4 +1,4 @@
 import Vue from 'vue';
-import VueNotifcation from 'vue-notification';
+import VueNotification from 'vue-notification';
 
-Vue.use(VueNotifcation);
+Vue.use(VueNotification);
