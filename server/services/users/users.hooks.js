@@ -45,12 +45,11 @@ module.exports = {
     all: [
       commonHooks
         .when(hook => hook.params.provider, commonHooks.discard('password')),
+        verifyHooks.removeVerification(),
     ],
     find: [],
     get: [],
-    create: [
-      verifyHooks.removeVerification(),
-    ],
+    create: [],
     update: [],
     patch: [],
     remove: [],
