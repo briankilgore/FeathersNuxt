@@ -1,14 +1,21 @@
 <template>
   <v-container fluid fill-height>
+    <v-toolbar color="transparent" absolute flat>
+      <v-toolbar-title><Logo height="36"></Logo></v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items>
+        <v-btn to="/login" flat>Login</v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
     <v-layout
       justify-center
       align-center
     >
       <v-flex
-        xs6
+        xs4
       >
         <v-card>
-          <v-toolbar color="indigo" dark card flat>
+          <v-toolbar color="green" dark card flat>
             <v-toolbar-title>Verify</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
@@ -17,7 +24,7 @@
               Please <nuxt-link to="/login">login</nuxt-link>
             </div>
             <div v-if="error">
-              <h1><pre>{{ error }}</pre></h1>
+              <h1>{{ error }}</h1>
             </div>
           </v-card-text>
         </v-card>
@@ -57,7 +64,7 @@ export default {
         }
       } catch (error) {
         console.log(error);
-        this.error = error;
+        this.error = 'Invalid token';
       }
     } else {
       this.message = 'No token provided';
@@ -71,6 +78,9 @@ export default {
 };
 </script>
 
-<style>
-
+<style scoped>
+.container {
+  background-image: url(/images/man-working-in-modern-office_4460x4460_bw.jpg);
+  background-size: cover;
+}
 </style>
