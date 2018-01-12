@@ -18,6 +18,5 @@ process.on('nuxt:build:done', (err) => {
 
   server.on('listening', () => {
     logger.info(`Feathers application started on ${app.get('host')}:${port}`);
-    console.log(`Feathers application started on ${app.get('host')}:${port}`);
   });
 });
