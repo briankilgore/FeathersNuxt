@@ -1,13 +1,14 @@
 <template>
-  <v-toolbar color="indigo" absolute clipped-left dark fixed flat app>
+  <v-toolbar color="green" absolute clipped-left dark fixed flat app>
     <v-toolbar-side-icon v-show="$vuetify.breakpoint.width <= 1264" @click.stop="toggleDrawer"></v-toolbar-side-icon>
-    <v-toolbar-title>{{ title }}</v-toolbar-title>
+    <v-toolbar-title><Logo height="24"></Logo></v-toolbar-title>
     <v-spacer></v-spacer>
     <profile></profile>
   </v-toolbar>
 </template>
 
 <script>
+import Logo from '~/components/Logo';
 import Profile from '~/components/Profile';
 
 export default {
@@ -26,6 +27,7 @@ export default {
     },
   },
   components: {
+    Logo,
     Profile,
   },
 };

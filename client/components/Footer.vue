@@ -1,5 +1,5 @@
 <template>
-  <v-footer color="indigo" v-show="$vuetify.breakpoint.width > 1264" fixed app>
+  <v-footer color="green" v-show="$vuetify.breakpoint.width > 1264" fixed app>
     <span class="white--text">{{ title }} &copy; 2017</span>
   </v-footer>
 </template>
