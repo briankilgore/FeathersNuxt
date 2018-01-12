@@ -2,7 +2,7 @@
   <div>
     <no-ssr>
       <notifications group="notice" width="100%" position="top center">
-        <template slot="body" scope="props">
+        <template slot="body" slot-scope="props">
           <v-alert
             class="alert ma-0"
             :type="props.item.type"
@@ -18,7 +18,7 @@
     </no-ssr>
     <no-ssr>
       <notifications  group="alert" position="bottom center">
-        <template slot="body" scope="props">
+        <template slot="body" slot-scope="props">
           <v-snackbar
             :timeout="timeout"
             bottom
