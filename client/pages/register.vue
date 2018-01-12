@@ -1,18 +1,26 @@
 <template>
-  <v-container fluid fill-height>
+  <v-container class="test" fluid fill-height>
+    <v-toolbar color="transparent" absolute flat>
+      <v-toolbar-title><Logo height="36"></Logo></v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-side-icon class="hidden-md-and-up"></v-toolbar-side-icon>
+      <v-toolbar-items class="hidden-sm-and-down">
+        <v-btn to="/login" flat>Login</v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
     <v-layout
       justify-center
       align-center
     >
       <v-flex
-        xs6
+        xs4
       >
         <v-card>
-          <v-toolbar color="indigo" dark card flat>
-            <v-toolbar-title>Register</v-toolbar-title>
+          <v-toolbar color="green" dark card flat>
+            <v-toolbar-title>Sign Up</v-toolbar-title>
           </v-toolbar>
-          <v-card-text>
-            <v-form v-model="valid" ref="form" lazy-validation>
+          <v-card-text class="pa-5">
+            <v-form v-model="valid" ref="form" lazy-validation v-on:submit.prevent="submit">
               <v-text-field
                 label="First Name"
                 v-model="firstName"
@@ -40,8 +48,15 @@
                 :type="showPassword ? 'text' : 'password'"
                 required
               ></v-text-field>
+              <v-btn
+                :loading="$store.state.auth.isAuthenticatePending"
+                :disabled="$store.state.auth.isAuthenticatePending"
+                type="submit"
+                block
+              >
+                Submit
+              </v-btn>
             </v-form>
-            <v-btn @click="submit" block>Submit</v-btn>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -50,6 +65,7 @@
 </template>
 
 <script>
+import Logo from '~/components/Logo';
 import { mapActions } from 'vuex';
 
 export default {
@@ -93,18 +109,35 @@ export default {
         });
 
         // send signup verification notification
-        this.authManagementCreate({
+        await this.authManagementCreate({
           action: 'resendVerifySignup',
           value: { email: user.email },
         });
+
+        this.$notify({
+          group: 'notice',
+          type: 'success',
+          text: `Account Created! Please verify your email: ${user.email}`,
+        });
       } catch (error) {
         console.log(error);
+        this.$notify({
+          group: 'notice',
+          type: 'error',
+          text: `Unable to create account. ${error.message}`,
+        });
       }
     },
+  },
+  components: {
+    Logo
   },
 };
 </script>
 
-<style>
-
+<style scoped>
+.container {
+  background-image: url(/images/man-working-in-modern-office_4460x4460_bw.jpg);
+  background-size: cover;
+}
 </style>
