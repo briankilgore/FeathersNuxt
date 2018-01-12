@@ -1,26 +1,36 @@
 <template>
-  <v-container fluid fill-height>
+  <v-container class="test" fluid fill-height>
+    <v-toolbar color="transparent" absolute flat>
+      <v-toolbar-title><Logo height="36"></Logo></v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-side-icon class="hidden-md-and-up"></v-toolbar-side-icon>
+      <v-toolbar-items class="hidden-sm-and-down">
+        <v-btn to="/register" flat>Sign Up</v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
     <v-layout
       justify-center
       align-center
     >
       <v-flex
-        xs6
+        xs4
       >
         <v-card>
-          <v-toolbar color="indigo" dark card flat>
+          <v-toolbar color="green" dark card flat>
             <v-toolbar-title>Login</v-toolbar-title>
           </v-toolbar>
-          <v-card-text>
+          <v-card-text class="pa-5">
             <v-form v-model="valid" ref="form" lazy-validation v-on:submit.prevent="signIn">
               <v-text-field
                 label="Email"
+                prepend-icon="email"
                 v-model="email"
                 :rules="emailRules"
                 required
               ></v-text-field>
               <v-text-field
                 label="Password"
+                prepend-icon="lock"
                 v-model="password"
                 :rules="passwordRules"
                 :append-icon="showPassword ? 'visibility' : 'visibility_off'"
@@ -34,9 +44,12 @@
                 type="submit"
                 block
               >
-                Login
+                Submit
               </v-btn>
             </v-form>
+            <p class="pt-3 text-xs-center">
+              <nuxt-link to="/reset-password">I forgot my password</nuxt-link>
+            </p>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -45,6 +58,7 @@
 </template>
 
 <script>
+import Logo from '~/components/Logo';
 import { mapActions } from 'vuex';
 
 export default {
@@ -79,30 +93,26 @@ export default {
             this.$router.replace('/');
           })
           .catch((e) => {
-            let msg;
             switch (e.name) {
               case 'NotAuthenticated':
-                msg = `${e.message}. Please check your email and password and try again.`;
                 this.$notify({
                   group: 'notice',
                   type: 'info',
-                  text: msg,
+                  text: `${e.message}. Please check your email and password and try again.`,
                 });
                 break;
               case 'Error':
-                msg = `${e.name}. ${e.message}`;
                 this.$notify({
                   group: 'notice',
                   type: 'error',
-                  text: msg,
+                  text: `${e.name}. ${e.message}`,
                 });
                 break;
               default:
-                msg = 'Unknown error occurred. Please check your email and password and try again.';
                 this.$notify({
                   group: 'notice',
                   type: 'error',
-                  text: msg,
+                  text: 'Unknown error occurred. Please check your email and password and try again.',
                 });
             }
           });
@@ -114,17 +124,17 @@ export default {
   mounted: function () {
   },
   watch: {
-    error: function () {
-      if (this.error) {
-        setTimeout(() => {
-          this.error = '';
-        }, 3000);
-      }
-    },
+  },
+  components: {
+    Logo
   },
 };
 </script>
 
-<style>
+<style scoped>
+.container {
+  background-image: url(/images/man-working-in-modern-office_4460x4460_bw.jpg);
+  background-size: cover;
+}
 </style>
 
