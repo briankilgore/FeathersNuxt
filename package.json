@@ -36,7 +36,8 @@
     "dev": "DEBUG=nuxt:* nodemon --watch server/ --watch config/ server/index.js",
     "dev-debug": "DEBUG=nuxt:* nodemon --inspect-brk --watch server/ --watch config/ server/index.js",
     "start": "NODE_ENV=production node server/index.js",
-    "mocha": "mocha test/ --recursive"
+    "mocha": "mocha test/ --recursive",
+    "heroku-postbuild": "nuxt build"
   },
   "dependencies": {
     "body-parser": "^1.18.0",
