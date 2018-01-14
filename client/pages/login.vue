@@ -3,8 +3,7 @@
     <v-toolbar color="transparent" absolute flat>
       <v-toolbar-title><Logo height="36"></Logo></v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-side-icon class="hidden-md-and-up"></v-toolbar-side-icon>
-      <v-toolbar-items class="hidden-sm-and-down">
+      <v-toolbar-items>
         <v-btn to="/register" flat>Sign Up</v-btn>
       </v-toolbar-items>
     </v-toolbar>
@@ -13,7 +12,7 @@
       align-center
     >
       <v-flex
-        xs4
+        xs12 sm8 md6 xl4
       >
         <v-card>
           <v-toolbar color="green" dark card flat>
@@ -81,6 +80,7 @@ export default {
   methods: {
     ...mapActions({
       authenticate: 'auth/authenticate',
+      logout: 'auth/logout',
     }),
     signIn: async function () {
       console.log('Form submitted');
@@ -122,6 +122,7 @@ export default {
     },
   },
   mounted: function () {
+    // this.logout();
   },
   watch: {
   },

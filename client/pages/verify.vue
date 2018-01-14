@@ -12,7 +12,7 @@
       align-center
     >
       <v-flex
-        xs4
+        xs12 sm8 md6 xl4
       >
         <v-card>
           <v-toolbar color="green" dark card flat>
