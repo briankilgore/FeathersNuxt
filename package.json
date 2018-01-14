@@ -34,7 +34,8 @@
     "eslint": "eslint server/. test/. --config .eslintrc.json",
     "build": "nuxt build",
     "dev": "DEBUG=nuxt:* nodemon --watch server/ --watch config/ server/index.js",
-    "start": "NODE_ENV=production nodemon server/",
+    "dev-debug": "DEBUG=nuxt:* nodemon --inspect-brk --watch server/ --watch config/ server/index.js",
+    "start": "NODE_ENV=production node server/index.js",
     "mocha": "mocha test/ --recursive"
   },
   "dependencies": {
