@@ -113,5 +113,13 @@ data/
 
 # nuxt
 .nuxt/**
+dist/**
 
 .env
+
+.vscode/**
+
+# development certs
+server.crt
+server.csr
+server.key
