@@ -20,7 +20,7 @@
     "test": "test/"
   },
   "engines": {
-    "node": ">= 6.0.0",
+    "node": "8.1.1",
     "npm": ">= 3.0.0"
   },
   "babel": {
