@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid fill-height>
+  <v-container :class="{ 'pa-0': $vuetify.breakpoint.smAndDown }" fluid>
     <v-layout
       justify-center
       align-center
