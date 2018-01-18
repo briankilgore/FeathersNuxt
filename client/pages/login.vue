@@ -1,5 +1,5 @@
 <template>
-  <v-container class="test" fluid fill-height>
+  <v-container fluid fill-height>
     <v-toolbar color="transparent" absolute flat>
       <v-toolbar-title><Logo height="36"></Logo></v-toolbar-title>
       <v-spacer></v-spacer>
@@ -134,7 +134,7 @@ export default {
 
 <style scoped>
 .container {
-  background-image: url(/images/man-working-in-modern-office_4460x4460_bw.jpg);
+  background-image: url(/images/man-working-in-modern-office_bw.jpg);
   background-size: cover;
 }
 </style>

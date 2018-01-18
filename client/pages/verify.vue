@@ -80,7 +80,7 @@ export default {
 
 <style scoped>
 .container {
-  background-image: url(/images/man-working-in-modern-office_4460x4460_bw.jpg);
+  background-image: url(/images/man-working-in-modern-office_bw.jpg);
   background-size: cover;
 }
 </style>
