@@ -1,17 +1,18 @@
 <template>
-  <v-container fluid>
+  <v-container :class="{ 'pa-0': $vuetify.breakpoint.smAndDown }" fluid>
     <v-layout wrap>
-      <v-flex xs12 sm8 offset-sm2>
+      <v-flex xs12 md8 offset-md2>
         <v-card>
           <v-card-media
-            class="green white--text"
+            class="blue-grey lighten-1 white--text"
             height="250px"
-            :src="`/backgrounds/vector/${Math.floor(Math.random() * 40) + 1}.jpg`"
+            :src="`/images/headers/${headerImage}`"
           >
             <v-container fill-height fluid>
               <v-layout column class="media" fill-height>
                 <v-flex xs12 align-end flexbox>
                   <v-card-title>
+                    <edit-header-dialog :headerImage.sync="headerImage"></edit-header-dialog>
                     <v-spacer></v-spacer>
                     <v-btn dark icon @click="edit = !edit">
                       <v-icon>edit</v-icon>
@@ -25,7 +26,7 @@
             <v-layout wrap style="position: relative; top: -175px;">
               <v-flex xs12 class="text-xs-center">
                 <p class="display-1 white--text">{{firstName}} {{lastName}}</p>
-                <profile-avatar :loading="profilePicLoading" editable :src="user.profileUrl" v-on:update="updateProfilePic"></profile-avatar>
+                <profile-avatar :loading="profilePicLoading" editable :src.sync="profilePic"></profile-avatar>
               </v-flex>
               <v-flex xs12>
                 <v-form v-model="valid" ref="form" lazy-validation v-on:submit.prevent="submit">
@@ -64,7 +65,7 @@
                         <v-icon color="blue darken-2">phone</v-icon>
                       </v-list-tile-action>
                       <v-list-tile-content v-if="edit === false">
-                        <v-list-tile-title>{{phone}}</v-list-tile-title>
+                        <v-list-tile-title>{{phone | phoneNumber}}</v-list-tile-title>
                         <v-list-tile-sub-title>{{phoneType}}</v-list-tile-sub-title>
                       </v-list-tile-content>
                       <v-list-tile-content v-else>
@@ -86,21 +87,9 @@
                       <v-list-tile-action>
                         <v-icon color="blue darken-2">mail</v-icon>
                       </v-list-tile-action>
-                      <v-list-tile-content v-if="edit === false">
+                      <v-list-tile-content>
                         <v-list-tile-title>{{email}}</v-list-tile-title>
                         <v-list-tile-sub-title>{{emailType}}</v-list-tile-sub-title>
-                      </v-list-tile-content>
-                      <v-list-tile-content v-else>
-                        <v-layout style="width: 100%">
-                          <v-flex xs12>
-                            <v-text-field
-                              label="Email"
-                              v-model="email"
-                              :rules="[(v) => !!v || 'Email is required']"
-                              required
-                            ></v-text-field>
-                          </v-flex>
-                        </v-layout>
                       </v-list-tile-content>
                     </v-list-tile>
                     <v-divider inset v-if="edit === false"></v-divider>
@@ -153,16 +142,6 @@
                     </v-list-tile>
                     <v-divider inset v-if="edit === false"></v-divider>
                   </v-list>
-                  <v-btn
-                    v-if="edit"
-                    class="mt-5"
-                    :loading="$store.state.auth.isAuthenticatePending"
-                    :disabled="$store.state.auth.isAuthenticatePending"
-                    type="submit"
-                    block
-                  >
-                    Save
-                  </v-btn>
                 </v-form>
               </v-flex>
             </v-layout>
@@ -174,35 +153,137 @@
 </template>
 
 <script>
+import { debounce } from 'lodash';
 import { mapActions, mapState } from 'vuex';
 import ProfileAvatar from '~/components/ProfileAvatar';
+import EditHeaderDialog from '~/components/EditHeaderDialog';
 
 export default {
   layout: 'authenticated',
   data: function () {
     return {
-      firstName: 'Brian',
-      lastName: 'Kilgore',
-      email: 'briankilgore@yahoo.com',
-      emailType: 'Work',
-      phone: '(303) 704-7193',
-      phoneType: 'Mobile',
-      street: '1672 Oneida St.',
-      city: 'Denver',
-      state: 'CO',
-      postalCode: '80220',
-      profileUrl: '',
       states: ['CA','CO'],
+      profilePicLoading: false,
       valid: false,
       error: false,
-      edit: true,
+      edit: false,
       success: false,
     };
   },
   computed: {
-    ...mapState('auth', {
-      user: 'user',
-    }),
+    firstName: {
+      get () {
+        return this.$store.state.auth.user.firstName;
+      },
+      set (value) {
+        const userId = this.$store.state.auth.user._id;
+        this.patchUser(userId, { firstName: value });
+      },
+    },
+    lastName: {
+      get () {
+        return this.$store.state.auth.user.lastName;
+      },
+      set (value) {
+        const userId = this.$store.state.auth.user._id;
+        this.patchUser(userId, { lastName: value });
+      },
+    },
+    email: function () {
+      return this.$store.state.auth.user.email;
+    },
+    emailType: {
+      get () {
+        return this.$store.state.auth.user.emailType;
+      },
+      set (value) {
+        const userId = this.$store.state.auth.user._id;
+        this.patchUser(userId, { emailType: value });
+      },
+    },
+    phone: {
+      get () {
+        return this.$store.state.auth.user.phone;
+      },
+      set (value) {
+        const userId = this.$store.state.auth.user._id;
+        this.patchUser(userId, { phone: value });
+      },
+    },
+    phoneType: {
+      get () {
+        return this.$store.state.auth.user.phoneType;
+      },
+      set (value) {
+        const userId = this.$store.state.auth.user._id;
+        this.patchUser(userId, { phoneType: value });
+      },
+    },
+    street: {
+      get () {
+        return this.$store.state.auth.user.street;
+      },
+      set (value) {
+        const userId = this.$store.state.auth.user._id;
+        this.patchUser(userId, { street: value });
+      },
+    },
+    city: {
+      get () {
+        return this.$store.state.auth.user.city;
+      },
+      set (value) {
+        const userId = this.$store.state.auth.user._id;
+        this.patchUser(userId, { city: value });
+      },
+    },
+    state: {
+      get () {
+        return this.$store.state.auth.user.state;
+      },
+      set (value) {
+        const userId = this.$store.state.auth.user._id;
+        this.patchUser(userId, { state: value });
+      },
+    },
+    postalCode: {
+      get () {
+        return this.$store.state.auth.user.postalCode;
+      },
+      set (value) {
+        const userId = this.$store.state.auth.user._id;
+        this.patchUser(userId, { postalCode: value });
+      },
+    },
+    profilePic: {
+      get () {
+        return this.$store.state.auth.user.profileUrl;
+      },
+      async set (data) {
+        const userId = this.$store.state.auth.user._id;
+        const upload = await this.createUpload(data);
+
+        if(upload) {
+          console.log(upload);
+          this.userPatch([userId, { profileUrl: upload.secure_url }]);
+        } else {
+          console.log('Error uploading image');
+        }
+      },
+    },
+    headerImage: {
+      get () {
+        return this.$store.state.auth.user.headerImage;
+      },
+      set (value) {
+        console.log(value);
+        const userId = this.$store.state.auth.user._id;
+        this.patchUser(userId, { headerImage: value });
+      },
+    },
+    // ...mapState('auth', {
+    //   user: 'user',
+    // }),
   },
   methods: {
     ...mapActions({
@@ -211,6 +292,9 @@ export default {
       userService: 'auth/user',
       // watchUser: 'auth/watchUser'
     }),
+    patchUser: debounce(function(userId, data) {
+      this.userPatch([userId, data])
+    }, 1000, { 'maxWait': 5000 }),
     changePassword: async function () {
       const payload = { password: this.password };
 
@@ -226,15 +310,15 @@ export default {
         }
       }
     },
-    updateProfilePic: async function (data) {
-      let upload = await this.createUpload(data);
-      if(upload) {
-        console.log(upload);
-        this.userPatch([this.user._id, { profileUrl: upload.secure_url }]);
-      } else {
-        console.log('Error uploading image');
-      }
-    },
+    // updateProfilePic: async function (data) {
+    //   let upload = await this.createUpload(data);
+    //   if(upload) {
+    //     console.log(upload);
+    //     this.userPatch([this.user._id, { profileUrl: upload.secure_url }]);
+    //   } else {
+    //     console.log('Error uploading image');
+    //   }
+    // },
   },
   watch: {
     success: function () {
@@ -252,12 +336,20 @@ export default {
       }
     },
   },
+  filters: {
+    phoneNumber: function (value) {
+      var s2 = (""+value).replace(/\D/g, '');
+      var m = s2.match(/^(\d{3})(\d{3})(\d{4})$/);
+      return (!m) ? null : "(" + m[1] + ") " + m[2] + " - " + m[3];
+    },
+  },
   mounted: function () {
     // this.watchUser();
     console.log(this.$store);
   },
   components: {
     ProfileAvatar,
+    EditHeaderDialog,
   }
 };
 </script>

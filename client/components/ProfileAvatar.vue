@@ -5,7 +5,9 @@
   >
     <img :src="src" alt="avatar" v-if="src">
     <v-icon style="font-size: 8rem;" v-else>person</v-icon>
-    <label for="file" class="text">Upload new photo</label>
+    <label for="file" id="overlay">
+      <span class="text">Upload new photo</span>
+    </label>
     <input type="file" name="file" id="file" class="inputfile" @change="update" />
   </v-avatar>
 </template>
@@ -26,7 +28,7 @@ export default {
       console.log(files[0]);
       reader.onloadend = (e) => {
         console.log(e);
-        this.$emit('update', {
+        this.$emit('update:src', {
           name: files[0].name,
           type: files[0].type,
           dataUri: e.target.result,
@@ -61,11 +63,24 @@ input[type=file] {
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   text-align: center;
-  display: none;
+  opacity: 1;
 }
 
-.image-container:hover .text {
+.image-container:hover #overlay {
   display: block;
+}
+
+#overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  display: none;
+  border-radius: 50%;
+  background-color: rgba(192,192,192,0.5);
 }
 
 </style>
