@@ -25,7 +25,7 @@ export default {
   data: function () {
     return {
       drawer: null,
-      title: 'LoopbackVue',
+      title: 'FeathersNuxt',
       alertMessage: 'Test Error',
     };
   },
