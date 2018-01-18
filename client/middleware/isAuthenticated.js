@@ -1,5 +1,6 @@
 export default function ({ store, redirect }) {
-  if (!store.state.auth.payload) {
+  const isAuthenticated = !!store.state.auth.payload;
+  if (!isAuthenticated) {
     redirect('/login');
   }
 }
