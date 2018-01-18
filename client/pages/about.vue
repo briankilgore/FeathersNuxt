@@ -11,7 +11,6 @@
 
 <script>
 export default {
-  layout: 'authenticated',
 };
 </script>
 
