@@ -1,6 +1,6 @@
 <template>
-  <v-footer color="green" v-show="$vuetify.breakpoint.width > 1264" fixed app>
-    <span class="white--text">{{ title }} &copy; 2017</span>
+  <v-footer class="elevation-1" color="white" app>
+    <span>{{ title }} &copy; 2017</span>
   </v-footer>
 </template>
 
