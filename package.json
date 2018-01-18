@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "body-parser": "^1.18.0",
+    "cloudinary": "^1.9.1",
     "compression": "^1.7.0",
     "cors": "^2.8.4",
     "ejs": "^2.5.7",
@@ -52,6 +53,7 @@
     "feathers-authentication-local": "^0.4.4",
     "feathers-authentication-management": "^1.0.3",
     "feathers-authentication-oauth2": "^0.2.5",
+    "feathers-blob": "^1.3.1",
     "feathers-configuration": "^0.4.1",
     "feathers-errors": "^2.9.2",
     "feathers-hooks": "^2.0.2",
