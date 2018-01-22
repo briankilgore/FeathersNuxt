@@ -11,7 +11,7 @@
           <v-container fluid>
             <v-layout>
               <v-flex xs12 align-end flexbox>
-                <span class="display-1">Home</span>
+                <span class="display-1">Contacts</span>
               </v-flex>
             </v-layout>
           </v-container>
