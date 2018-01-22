@@ -15,7 +15,7 @@
         xs12 sm8 md6 xl4
       >
         <v-card>
-          <v-toolbar color="green" dark card flat>
+          <v-toolbar color="cardHeader" dark card flat>
             <v-toolbar-title>Verify</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
