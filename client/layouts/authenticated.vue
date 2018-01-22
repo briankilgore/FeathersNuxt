@@ -2,8 +2,8 @@
   <div id="app">
     <v-app>
       <notifications></notifications>
-      <navigation-drawer :drawer.sync="drawer" :user="user" v-on:logout="handleLogout"></navigation-drawer>
-      <toolbar :title="title" :drawer.sync="drawer"></toolbar>
+      <navigation-drawer :drawer.sync="drawer" :currentUser="currentUser" v-on:logout="handleLogout"></navigation-drawer>
+      <toolbar :title="title" :drawer.sync="drawer" :currentUser="currentUser"></toolbar>
       <v-content>
         <nuxt />
       </v-content>
@@ -30,8 +30,7 @@ export default {
     };
   },
   computed: {
-    user: function () {
-      // console.log(this.$store.state);
+    currentUser: function () {
       return this.$store.state.auth.user || {};
     },
   },
