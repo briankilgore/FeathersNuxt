@@ -12,6 +12,7 @@ Vue.use(Vuex);
 const { service, auth } = feathersVuex(feathers, { idField: '_id' });
 
 const store = new Vuex.Store({
+  strict: true,
   modules: {
     // alerts: {
     //   namespaced: true,
