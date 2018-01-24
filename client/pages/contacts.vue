@@ -31,6 +31,10 @@
 <script>
 export default {
   layout: 'authenticated',
+  // beforeRouteEnter: function (to, from, next) {
+  //   console.log(to, from);
+  //   return false;
+  // },
   data: function () {
     return {
     };
