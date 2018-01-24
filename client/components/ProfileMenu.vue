@@ -19,7 +19,7 @@
         <v-divider></v-divider>
         <v-list-tile to="/profile" nuxt>
           <v-list-tile-avatar>
-            <v-icon left>settings</v-icon>
+            <v-icon left>person</v-icon>
           </v-list-tile-avatar>
           <v-list-tile-content>
             <v-list-tile-title class="body-2">Profile</v-list-tile-title>
