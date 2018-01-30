@@ -1,15 +1,15 @@
-// companies-model.js - A mongoose model
+// organizations-model.js - A mongoose model
 // 
 // See http://mongoosejs.com/docs/models.html
 // for more of what you can do here.
 module.exports = function (app) {
   const mongooseClient = app.get('mongooseClient');
   const { Schema } = mongooseClient;
-  const companies = new Schema({
-    text: { type: String, required: true },
+  const organizations = new Schema({
+    name: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
   });
 
-  return mongooseClient.model('companies', companies);
+  return mongooseClient.model('organizations', organizations);
 };
