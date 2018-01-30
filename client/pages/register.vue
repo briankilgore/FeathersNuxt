@@ -34,7 +34,7 @@
               ></v-text-field>
               <v-text-field
                 label="Email"
-                v-model="emailAddress"
+                v-model="email"
                 :rules="emailRules"
                 required
               ></v-text-field>
@@ -72,7 +72,7 @@ export default {
     return {
       firstName: '',
       lastName: '',
-      emailAddress: '',
+      email: '',
       password: '',
       valid: false,
       showPassword: false,
@@ -103,7 +103,7 @@ export default {
         let user = await this.usersCreate({
           firstName: this.firstName,
           lastName: this.lastName,
-          email: this.emailAddress,
+          email: this.email,
           password: this.password,
         });
 
@@ -129,7 +129,7 @@ export default {
     },
   },
   components: {
-    Logo
+    Logo,
   },
 };
 </script>
