@@ -26,7 +26,7 @@
             <v-layout wrap style="position: relative; top: -175px;">
               <v-flex xs12 class="text-xs-center">
                 <p class="display-1 white--text">{{firstName}} {{lastName}}</p>
-                <profile-avatar :loading="profilePicLoading" editable :src.sync="profileUrl"></profile-avatar>
+                <profile-avatar :size="200" :border="true" :loading="profilePicLoading" :editable="true" :src.sync="profileUrl"></profile-avatar>
               </v-flex>
               <v-flex v-if="edit === false" xs12>
                   <v-list two-line>
@@ -156,8 +156,7 @@
 </template>
 
 <script>
-import { debounce } from 'lodash';
-import { mapActions, mapMutations, mapState } from 'vuex';
+import { mapActions } from 'vuex';
 import ProfileAvatar from '~/components/ProfileAvatar';
 import EditHeaderDialog from '~/components/EditHeaderDialog';
 
@@ -175,7 +174,7 @@ export default {
       city: '',
       state: '',
       postalCode: '',
-      states: ['CA','CO'],
+      states: ['CA', 'CO'],
       profilePicLoading: false,
       valid: false,
       error: false,
@@ -192,7 +191,7 @@ export default {
         const userId = this.$store.state.auth.user._id;
         const upload = await this.createUpload(data);
 
-        if(upload) {
+        if (upload) {
           console.log(upload);
           this.userPatch([userId, { profileUrl: upload.secure_url }]);
         } else {
@@ -239,7 +238,7 @@ export default {
         data,
       ]);
 
-      console.log("User updated", user);
+      console.log('User updated', user);
       this.edit = false;
     },
     loadDefaults: function () {
@@ -289,9 +288,9 @@ export default {
   },
   filters: {
     phoneNumber: function (value) {
-      var s2 = (""+value).replace(/\D/g, '');
+      var s2 = ('' + value).replace(/\D/g, '');
       var m = s2.match(/^(\d{3})(\d{3})(\d{4})$/);
-      return (!m) ? null : "(" + m[1] + ") " + m[2] + " - " + m[3];
+      return (!m) ? null : '(' + m[1] + ') ' + m[2] + ' - ' + m[3];
     },
   },
   mounted: function () {
@@ -304,12 +303,9 @@ export default {
   components: {
     ProfileAvatar,
     EditHeaderDialog,
-  }
+  },
 };
 </script>
 
-<style>
-.avatar img {
-  border: 5px solid rgba(255, 255, 255, 0.1);
-}
+<style scoped>
 </style>
