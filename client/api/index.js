@@ -6,7 +6,7 @@ import feathersStorage from '~/helpers/feathers-storage';
 import io from 'socket.io-client';
 // import { CookieStorage } from 'cookie-storage';
 
-const host = location.origin;
+const host = window.location.origin;
 const socket = io(host, {transports: ['websocket']});
 
 const api = feathers()
