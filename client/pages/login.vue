@@ -127,7 +127,7 @@ export default {
   watch: {
   },
   components: {
-    Logo
+    Logo,
   },
 };
 </script>

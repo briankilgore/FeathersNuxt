@@ -40,7 +40,7 @@ export default {
   data: function () {
     return {
       dialog: false,
-    }
+    };
   },
   methods: {
     selectHeader: function (value) {
@@ -49,7 +49,7 @@ export default {
       this.dialog = false;
     },
   },
-}
+};
 </script>
 
 <style>

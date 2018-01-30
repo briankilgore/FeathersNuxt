@@ -6,5 +6,5 @@ module.exports = function (feathersClient) {
         store.dispatch('auth/populateUser', user._id);
       }
     });
-  }
-}
+  };
+};

@@ -1,6 +1,5 @@
 import storage from '~/helpers/feathers-storage';
 
-
 export default async function ({ store, redirect }) {
   console.log('check-auth');
   const accessToken = storage.getItem('feathers-jwt');
@@ -14,7 +13,7 @@ export default async function ({ store, redirect }) {
       .catch((error) => {
         console.log(error);
         store.dispatch('auth/logout');
-      })
+      });
   } else {
     console.log('Something else happened');
   }
