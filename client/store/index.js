@@ -1,6 +1,6 @@
 import Vue from 'vue'; // eslint-disable-line import/no-extraneous-dependencies
 import Vuex from 'vuex'; // eslint-disable-line import/no-extraneous-dependencies
-import feathersVuex, { initAuth } from 'feathers-vuex';
+import feathersVuex from 'feathers-vuex';
 import feathers from '~/api';
 import ReactiveUserPlugin from './plugins/reactiveAuthUser';
 
@@ -22,6 +22,7 @@ const store = new Vuex.Store({
   plugins: [
     service('users'),
     service('authManagement'),
+    service('invitees'),
     service('upload', { idField: 'public_id' }),
     auth({ userService: 'users' }),
     ReactiveUserPlugin(feathers),
