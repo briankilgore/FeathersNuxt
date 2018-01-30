@@ -48,7 +48,7 @@ module.exports = {
       if (ctx.isClient) {
         config.module.rules.push({
           enforce: 'pre',
-          test: /client\/\.(js|vue)$/,
+          test: /\.(js|vue)$/,
           loader: 'eslint-loader',
           exclude: /(node_modules)/
         })
