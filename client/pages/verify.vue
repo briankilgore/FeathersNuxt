@@ -20,8 +20,10 @@
           </v-toolbar>
           <v-card-text>
             <div v-if="user.isVerified">
-              <h1>Email [{{ user.email }}] has been successfully verified!</h1>
-              Please <nuxt-link to="/login">login</nuxt-link>
+              <h2>{{ user.email }} has been successfully verified!</h2>
+              <p class="pt-5">
+                <v-btn block to="/login">Login</v-btn>
+              </p>
             </div>
             <div v-if="error">
               <h1>{{ error }}</h1>
@@ -34,6 +36,7 @@
 </template>
 
 <script>
+import Logo from '~/components/Logo';
 import { mapActions } from 'vuex';
 
 export default {
@@ -47,34 +50,38 @@ export default {
     ...mapActions('authManagement', {
       authManagementCreate: 'create',
     }),
+    verifyUserFromToken: async function (token) {
+      if (token) {
+        try {
+          const user = await this.authManagementCreate({
+            action: 'verifySignupLong',
+            value: token,
+          });
+
+          if (user && user.isVerified) {
+            this.user = user;
+          }
+        } catch (error) {
+          console.log(error);
+          this.error = 'Invalid token';
+        }
+      } else {
+        this.error = 'No token provided';
+      }
+    },
   },
   mounted: async function () {
-    console.log(this.$route);
     const token = this.$route.query.token;
-
-    if (token) {
-      try {
-        let user = await this.authManagementCreate({
-          action: 'verifySignupLong',
-          value: token,
-        });
-
-        if (user && user.isVerified) {
-          this.user = user;
-        }
-      } catch (error) {
-        console.log(error);
-        this.error = 'Invalid token';
-      }
-    } else {
-      this.message = 'No token provided';
-    }
+    this.verifyUserFromToken(token);
   },
   // can be used to validate route. Responds with 404 if validate returns false
   // validate ({ params, query }) {
   //   // Must be a number
   //   return /^\d+$/.test(query.token);
   // },
+  components: {
+    Logo,
+  },
 };
 </script>
 
