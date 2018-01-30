@@ -11,7 +11,7 @@
           <v-container fluid>
             <v-layout>
               <v-flex xs12 align-end flexbox>
-                <span class="display-1">Contacts</span>
+                <span class="display-1">Sessions</span>
               </v-flex>
             </v-layout>
           </v-container>
@@ -31,10 +31,6 @@
 <script>
 export default {
   layout: 'authenticated',
-  // beforeRouteEnter: function (to, from, next) {
-  //   console.log(to, from);
-  //   return false;
-  // },
   data: function () {
     return {
     };
