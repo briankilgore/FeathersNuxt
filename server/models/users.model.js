@@ -2,6 +2,8 @@
 //
 // See http://mongoosejs.com/docs/models.html
 // for more of what you can do here.
+const { ObjectId } = require('mongoose').Schema.Types;
+
 module.exports = function (app) {
   const mongooseClient = app.get('mongooseClient');
   const users = new mongooseClient.Schema({
@@ -18,6 +20,7 @@ module.exports = function (app) {
     profileUrl: { type: String },
     headerImage: { type: String },
     password: { type: String },
+    organization: { type: ObjectId },
     isVerified: { type: Boolean },
     verifyToken: { type: String },
     verifyShortToken: { type: String },

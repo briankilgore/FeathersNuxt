@@ -3,6 +3,7 @@ const commonHooks = require('feathers-hooks-common');
 const { restrictToOwner } = require('feathers-authentication-hooks');
 const { hashPassword } = require('feathers-authentication-local').hooks;
 const verifyHooks = require('feathers-authentication-management').hooks;
+const addUserToOrganization = require('../../hooks/add-user-to-organization');
 
 const restrict = [
   authenticate('jwt'),
@@ -20,6 +21,7 @@ module.exports = {
     create: [
       hashPassword(),
       verifyHooks.addVerification(),
+      addUserToOrganization(),
     ],
     update: [commonHooks.disallow('external')],
     patch: [
@@ -49,7 +51,8 @@ module.exports = {
     ],
     find: [],
     get: [],
-    create: [],
+    create: [
+    ],
     update: [],
     patch: [],
     remove: [],
