@@ -1,15 +1,13 @@
 <template>
   <v-menu offset-y>
     <v-btn class="white--text" flat fab :ripple="false" slot="activator">
-      <v-avatar size="40px">
-        <img :src="currentUser.profileUrl" />
-      </v-avatar>
+      <profile-avatar class="mr-4" :size="30" :src.sync="currentUser.profileUrl"></profile-avatar>
     </v-btn>
     <v-card>
       <v-list dense>
-        <v-list-tile class="pt-3 pb-3" avatar>
+        <v-list-tile class="pt-3 pb-3">
           <v-list-tile-avatar>
-            <img :src="currentUser.profileUrl" style="width: 48px; height: 48px;" />
+            <profile-avatar :size="40" :src.sync="currentUser.profileUrl"></profile-avatar>
           </v-list-tile-avatar>
           <v-list-tile-content>
             <v-list-tile-title>{{ currentUser.firstName }} {{ currentUser.lastName }}</v-list-tile-title>
@@ -36,11 +34,16 @@
 </template>
 
 <script>
+import ProfileAvatar from '~/components/ProfileAvatar';
+
 export default {
   props: {
     currentUser: { type: Object, default: () => {} },
   },
   methods: {
+  },
+  components: {
+    ProfileAvatar,
   },
 };
 </script>
