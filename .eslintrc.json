@@ -6,7 +6,9 @@
   },
   "parser": "babel-eslint",
   "extends": "standard",
-  "plugins": "html",
+  "plugins": [
+    "html"
+  ],
   "rules": {
     "import/extensions": ["off", "never", {
       "js": "never",
