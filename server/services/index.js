@@ -14,7 +14,9 @@ const sessions = require('./sessions/sessions.service.js');
 
 const availability = require('./availability/availability.service.js');
 
-const companies = require('./companies/companies.service.js');
+const organizations = require('./organizations/organizations.service.js');
+
+const invitees = require('./invitees/invitees.service.js');
 
 module.exports = function () {
   const app = this; // eslint-disable-line no-unused-vars
@@ -26,5 +28,6 @@ module.exports = function () {
   app.configure(locations);
   app.configure(sessions);
   app.configure(availability);
-  app.configure(companies);
+  app.configure(organizations);
+  app.configure(invitees);
 };
