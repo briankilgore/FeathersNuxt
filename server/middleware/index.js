@@ -1,7 +1,7 @@
 'use strict';
 const { render } = require('./nuxt');
 
-const handler = require('feathers-errors/handler');
+const handler = require('@feathersjs/express/errors');
 const notFound = require('feathers-errors/not-found');
 const logger = require('./logger');
 

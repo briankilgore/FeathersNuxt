@@ -1,7 +1,7 @@
-const { authenticate } = require('feathers-authentication').hooks;
+const { authenticate } = require('@feathersjs/authentication').hooks;
 const commonHooks = require('feathers-hooks-common');
 const { restrictToOwner } = require('feathers-authentication-hooks');
-const { hashPassword } = require('feathers-authentication-local').hooks;
+const { hashPassword, protect } = require('@feathersjs/authentication-local').hooks;
 const verifyHooks = require('feathers-authentication-management').hooks;
 const addUserToOrganization = require('../../hooks/add-user-to-organization');
 
@@ -16,7 +16,9 @@ const restrict = [
 module.exports = {
   before: {
     all: [],
-    find: [authenticate('jwt')],
+    find: [
+      authenticate('jwt'),
+    ],
     get: [...restrict],
     create: [
       hashPassword(),
@@ -45,14 +47,14 @@ module.exports = {
 
   after: {
     all: [
-      commonHooks
-        .when(hook => hook.params.provider, commonHooks.discard('password')),
-        verifyHooks.removeVerification(),
+      verifyHooks.removeVerification(),
+      // Make sure the password field is never sent to the client
+      // Always must be the last hook
+      protect('password'),
     ],
     find: [],
     get: [],
-    create: [
-    ],
+    create: [],
     update: [],
     patch: [],
     remove: [],
